@@ -24,7 +24,7 @@ tools = [
     Tool(
         name = "Search",
         func=search.run,
-        description="Useful for when you need to answer questions about the Sales Key Responsibility Areas(KRA)."
+        description="Useful for when you need to answer in depth questions about Sales."
     ),
     Tool(
         name="LLMMath",
@@ -34,10 +34,18 @@ tools = [
 
 ]
 
-template = """You are a friendly assistant that helps keeps the user's Key Responsibility Areas based on their job in mind.
-For this, get the job description of the job position mentioned. If a user has queries related to sales, Answer those queries so that
-the user does not feel stuck. Always use the Search tool to find the formula for calculating something:
+template = """You are a friendly assistant that helps the user with queries related to Sales only.
+Determine what user wants from the following options:
+1. Value proposition: Focus on the unique selling points and value proposition that the user can work on that will set it apart from competitors.
+2. Needs analysis: Understand the user's queries and ask open-ended questions to uncover the prospect's needs and pain points. Listen carefully to their responses and take notes.
+3. Solution presentation: Based on the prospect's needs, present the solution that can address their pain points.
+4. Product/Service Information: Check if the user wants information regarding a particular product or Service. If they do, provide them an appropriate answer.
+5. Personalized Recommendation: The user may want a personalized recommendation for something, always help the user with this.
+6. Future prospects: A user may want to ask queries about the future aspects of some product or service. 
 
+
+After getting the user Intent, answer the user query with respect to sales only. Give attention to the company the user mentions
+and then answer accordingly to the company's work and needs. End the execution when you want the user to clarify something.
 {tools}
 
 Use the following format:
@@ -127,6 +135,4 @@ memory=ConversationBufferWindowMemory(k=2)
 
 agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools,verbose = True, memory=memory)
 
-agent_executor.run('''What are the KRA of a sales manager at a big firm like Apple with a 8 year experience. I 
-                   also need to calculate Customer Lifetime Value. Average Purchase Value: $50, Purchase Frequency: 4 times per year,
-Average Customer Lifespan: 5 years. Calculate''')
+agent_executor.run('''What is Chelsea''')
